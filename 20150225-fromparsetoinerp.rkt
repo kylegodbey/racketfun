@@ -85,7 +85,7 @@
                 (substitute var val rhs))]
     [with (sub-var sub-val sub-body) 
           (with sub-var sub-val
-                sub-body)]
+                (substitute var val sub-body))]
     ))
        
         
