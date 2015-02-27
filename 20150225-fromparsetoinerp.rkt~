@@ -25,7 +25,7 @@
 (define p1 3)
 (define p2 '{+ 3 5})
 (define p3 '{with {x 5} {+ 3 x}})
-(define p4 '{with {x 5} {with {y 3} {+ y x}}})
+(define p4 '{with {x 5} {with {y 3} {+ x y}}})
 (define p5 '{with {x 5} {with {x 3} {+ x 5}}})
 (define p6 '{with {z {+ 3 5}} {+ z z}})
 (define p7 '{with {z {with {x 4} {+ x x}}} z})
@@ -77,15 +77,11 @@
         (if (equal? var body)
             val
             body)]
-    [plus (lhs rhs)
-          (plus (substitute var val lhs)
-                (substitute var val rhs))]
-    [minus (lhs rhs)
-           (minus (substitute var val lhs)
-                (substitute var val rhs))]
+    [plus (lhs rhs) 'FIXME]
+    [minus (lhs rhs) 'FIXME]
     [with (sub-var sub-val sub-body) 
           (with sub-var sub-val
-                sub-body)]
+                'FIXME)]
     ))
        
         
