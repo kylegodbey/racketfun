@@ -1,0 +1,52 @@
+#lang racket
+(require plai)
+
+(define-type AE
+  [num (n number?)]
+  [plus (lhs AE?)
+        (rhs AE?)]
+  [minus (lhs AE?)
+         (rhs AE?)]
+  [mult (lhs AE?)
+         (rhs AE?)]
+  [div (lhs AE?)
+         (rhs AE?)])
+
+(define-type id
+  [id (id symbol?)])
+
+(define (parse sexp)
+  (cond
+    [(empty? sexp) (error "Never get here.")]
+    [(number? sexp) (num sexp)]
+    [(equal? (first sexp) '+)
+     (plus (parse (second sexp))
+           (parse (third sexp)))]
+    [(equal? (first sexp) '-)
+     (minus (parse (second sexp))
+            (parse (third sexp)))]
+    [(equal? (first sexp) '*)
+     (mult (parse (second sexp))
+           (parse (third sexp)))]
+    [(equal? (first sexp) '/)
+     (div (parse (second sexp))
+            (parse (third sexp)))]))
+
+(define (interp ae)
+  (type-case AE ae
+    [num (n) n]
+    [plus (lhs rhs)
+          (+ (interp lhs)
+             (interp rhs))]
+    [minus (lhs rhs)
+           (- (interp lhs)
+              (interp rhs))]
+    [mult (lhs rhs)
+          (* (interp lhs)
+             (interp rhs))]
+    [div (lhs rhs)
+           (/ (interp lhs)
+              (interp rhs))]))
+
+(define (subst ast id val)
+  )
